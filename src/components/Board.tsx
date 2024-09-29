@@ -15,6 +15,7 @@ import { NodeDataContainer } from "./interfaces/NodeData";
 import { createChatModelNode } from "./factories/ChatModelFactory";
 import { SystemInstructionNode } from "./interfaces/SystemInstructionNode";
 import { DocumentLoaderNode } from "./interfaces/DocumentLoaderNode";
+import { TextSplitterNode } from "./interfaces/TextSplitterNode";
 
 const CHAT_MODELS = [
   {
@@ -80,6 +81,12 @@ export const Board = () => {
   const [nodeFlow, setNodeFlow] = useState<BaseNode[]>([])
 
   const [modelId, setModelId] = useState<string | null>(null);
+
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+
+  const handleFileUploaded = (file: File | null) => {
+    setUploadedFile(file);
+  };
 
 
   // let node_data: { node_data: { nodes: { id: string; type: "default" | "chatModel" | "output"; parameters: Record<string, any> | null; inputs: Record<string, string>; outputs: Record<string, string> | null; }[]; edges: { nodeStartId: string; nodeEndId: string; inputKey: string; outputKey: string; }[]; }; };
@@ -607,13 +614,51 @@ export const Board = () => {
       type: "documentLoader",
       parameters: {
         name: documentLoader,
-        fileFormat: fileFormat
+        fileFormat: fileFormat,
+        filePath: null
       },
       inputs: {
         prompt: ""
       },
       outputs: {
         response: "chatResponse"
+      },
+
+      prevPosition: {
+        x: randomX,
+        y: randomY
+      },
+      currPosition: {
+        x: randomX,
+        y: randomY
+      }
+    }
+
+    setNodes(prevNodes => [...prevNodes, newNode])
+    if (modelId) removeModel()
+
+    console.log(nodes)
+  }
+
+  const handleOnClickTextSplitter = (textSplitter: string) => {
+    const randomX = window.innerWidth / 2 - 50
+    const randomY = window.innerHeight / 2 - 100
+
+    const newNode: TextSplitterNode = {
+      id: `node_${Math.random().toString(36).substring(2, 8)}`,
+      type: "textSplitter",
+      parameters: {
+        name: textSplitter,
+        filePath: null,
+        chunk_size: 1000,
+        chunk_overlap: 0
+        // fileFormat: fileFormat
+      },
+      inputs: {
+        prompt: ""
+      },
+      outputs: {
+        response: "Document"
       },
 
       prevPosition: {
@@ -806,6 +851,7 @@ export const Board = () => {
   const [isChatModelsOpen, setIsChatModelsOpen] = useState<boolean>(false)
   const [isUtilsOpen, setIsUtilsOpen] = useState<boolean>(false)
   const [isDocumentLoadersOpen, setIsDocumentLoadersOpen] = useState<boolean>(false)
+  const [isTextSplittersOpen, setIsTextSplittersOpen] = useState<boolean>(false)
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(event.target.files || []) as File[];
@@ -828,6 +874,10 @@ export const Board = () => {
 
   const toggleDocLoaders = () => {
     setIsDocumentLoadersOpen(!isDocumentLoadersOpen);
+  };
+
+  const toggleTextSplitters = () => {
+    setIsTextSplittersOpen(!isTextSplittersOpen);
   };
 
   const getModelTypes = (chatModel: string): string[] => {
@@ -1046,6 +1096,36 @@ export const Board = () => {
               ))}
             </div>
           )}
+
+
+        </div>
+        {/* Text Splitters */}
+        <div>
+          <button
+            onClick={toggleTextSplitters}
+            className="flex items-center justify-between w-full text-left px-2 py-3 rounded-lg focus:outline-none"
+          >
+            Text Splitters
+            <span>
+              {isTextSplittersOpen ? (
+                <RxCaretUp></RxCaretUp>
+              ) : (<RxCaretDown></RxCaretDown>)}
+            </span>
+          </button>
+          {isTextSplittersOpen && (
+            <div className="space-y-2">
+              {TEXT_SPLITTERS.map((textSplitter) => (
+
+                <div
+                  key={textSplitter.name}
+                  onClick={() => handleOnClickTextSplitter(textSplitter.name)} // Pass chatModel here
+                  className="border-2 py-2 px-3 rounded-lg bg-neutral-200 cursor-pointer"
+                >
+                  {textSplitter.name}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
@@ -1085,6 +1165,8 @@ export const Board = () => {
               onMouseEnterInput={handleOnMouseEnterInput}
               onMouseLeaveInput={handleOnMouseLeaveInput}
               onParameterChange={handleOnParameterChange}
+              uploadedFile={uploadedFile}
+              onFileUploaded={handleFileUploaded}
             >
             </NodeRenderer>
           ))}

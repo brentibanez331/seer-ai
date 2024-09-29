@@ -1,7 +1,7 @@
 // "use client";
 
-import React, { useRef, useState } from "react"
-import { DocumentLoaderNodeProps, SystemInstructionNodeProps } from "./interfaces/NodeProps";
+import React, { useEffect, useRef, useState } from "react"
+import { DocumentLoaderNodeProps, SystemInstructionNodeProps, TextSplitterNodeProps } from "./interfaces/NodeProps";
 import { SystemInstructionNode } from "./interfaces/SystemInstructionNode";
 import { FaInfoCircle, FaEdit } from "react-icons/fa";
 import {
@@ -25,25 +25,35 @@ import { DocumentLoaderNode } from "./interfaces/DocumentLoaderNode";
 import { IoEyeSharp } from "react-icons/io5";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
+import { TextSplitterNode } from "./interfaces/TextSplitterNode";
 
 interface PageContent {
     page: number;
     page_content: string;
 }
 
-export const DocumentLoaderNodeComponent = ({
+export const TextSplitterNodeComponent = ({
     node,
-    // onMouseEnterInput,
-    // onMouseLeaveInput,
+    onMouseEnterInput,
+    onMouseLeaveInput,
     onMouseDownOutput,
     selected,
     x,
     y,
     onMouseDownNode,
-    onParameterChange, onFileUploaded }: DocumentLoaderNodeProps & { node: DocumentLoaderNode }) => {
+    onParameterChange, uploadedFile }: TextSplitterNodeProps & { node: TextSplitterNode }) => {
     const [file, setFile] = useState<File | null>(null);
     const [previewContent, setPreviewContent] = useState<PageContent[]>([]);
     const [isModalOpen, setIsModalOpen] = useState(false)
+
+    useEffect(() => {
+        if (uploadedFile) {
+            console.log("File received in TextSplitter:", uploadedFile);
+
+            // Call uploadFile when uploadedFile changes
+            uploadFile(uploadedFile); 
+        }
+    }, [uploadedFile]);
 
     const handleMouseDownOutput = (ref: any, event: any, outputKey: string) => {
         event.stopPropagation()
@@ -51,6 +61,17 @@ export const DocumentLoaderNodeComponent = ({
         const centerX = ref.getBoundingClientRect().left + Math.abs(ref.getBoundingClientRect().right - ref.getBoundingClientRect().left) / 2
         const centerY = ref.getBoundingClientRect().top + Math.abs(ref.getBoundingClientRect().bottom - ref.getBoundingClientRect().top) / 2
         onMouseDownOutput(centerX, centerY, node.id, outputKey)
+    }
+
+    const handleMouseEnterInput = (ref: any, inputKey: string) => {
+        const centerX = ref.getBoundingClientRect().left + Math.abs(ref.getBoundingClientRect().right - ref.getBoundingClientRect().left) / 2
+        const centerY = ref.getBoundingClientRect().top + Math.abs(ref.getBoundingClientRect().bottom - ref.getBoundingClientRect().top) / 2
+        onMouseEnterInput(centerX, centerY, node.id, inputKey)
+    }
+
+    const handleMouseLeaveInput = (inputKey: string) => {
+
+        onMouseLeaveInput(node.id, inputKey)
     }
 
     const handleInstructionChange = (event: any) => {
@@ -67,18 +88,13 @@ export const DocumentLoaderNodeComponent = ({
         }
     };
 
-    const handleFilePathChange = (value: string) => {
-        // Assuming onParameterChange is available to update the parent
-        console.log("UPDATING FILE PATH")
-        onParameterChange(node.id, 'filePath', value);
-    };
-
     const uploadFile = async (fileToUpload: File) => {
         const formData = new FormData();
         formData.append('file', fileToUpload);
-
+        formData.append('chunk_size', "100");
+        formData.append('chunk_overlap', "0")
         try {
-            const response = await fetch('http://127.0.0.1:5000/document_loader/upload_file', {
+            const response = await fetch('http://127.0.0.1:5000/text_splitter/document_chunk', {
                 method: 'POST',
                 body: formData,
             });
@@ -91,12 +107,11 @@ export const DocumentLoaderNodeComponent = ({
                     page: page.metadata.page,
                     page_content: page.page_content
                 }));
-                onFileUploaded(fileToUpload); 
 
                 setPreviewContent(formattedContent)
 
                 // You might want to update the node's parameters or state here
-                handleFilePathChange(result.filePath)
+                onParameterChange(node.id, 'uploadedFile', fileToUpload.name);
             } else {
                 console.error('File upload failed');
             }
@@ -113,9 +128,9 @@ export const DocumentLoaderNodeComponent = ({
                 onMouseDownNode(node.id, event)
             }}
         >
-            <div className="text-xs px-2 py-2">
+            <div className="text-xs px-2 py-2 space-y-4">
                 <div className="flex justify-between">
-                    <h2 className="text-md font-bold">{node.parameters.name} Loader</h2>
+                    <h2 className="text-md font-bold">{node.parameters.name}</h2>
 
                     <TooltipProvider>
                         <Tooltip>
@@ -129,21 +144,22 @@ export const DocumentLoaderNodeComponent = ({
                     </TooltipProvider>
                 </div>
 
-                <div className="py-4 space-y-4">
-
-
-                    {/* <button className="w-full text-white bg-neutral-900 py-2 px-2 rounded-md">
-                        Edit Instructions
-                    </button> */}
-                    <div className="space-y-1">
-                        <Label className="text-xs">{node.parameters.name} File</Label>
-                        <Input
-                            type="file"
-                            accept={node.parameters.fileFormat}
-                            className="text-xs file:text-xs px-0.5 h-min"
-                            onChange={handleFileChange} />
+                {/* A Text + Node Input */}
+                <div className="relative">
+                    <div className="input-wrapper">
+                        <div
+                            // key={index}
+                            ref={(el) => { }}
+                            className="input"
+                            onMouseEnter={(event) => handleMouseEnterInput(event.currentTarget, 'document')}
+                            onMouseLeave={() => handleMouseLeaveInput('document')}
+                        >
+                        </div>
                     </div>
+                    <p>Document</p>
+                </div>
 
+                <div className="py-2 space-y-4">
                     <Dialog open={isModalOpen} onOpenChange={() => setIsModalOpen(!isModalOpen)}>
                         <DialogTrigger asChild>
                             <button className="w-full text-white bg-neutral-900 py-2 px-2 rounded-md flex items-center justify-center gap-2">
@@ -153,12 +169,12 @@ export const DocumentLoaderNodeComponent = ({
                         </DialogTrigger>
                         <DialogContent className="sm:max-w-[750px] sm:h-4/5 p-0 flex flex-col rounded-lg overflow-hidden gap-0">
                             <DialogHeader className="p-4 sticky">
-                                <DialogTitle>Document Preview</DialogTitle>
+                                <DialogTitle>{node.parameters.name} Preview</DialogTitle>
                                 <DialogDescription>
                                     Edit or Add information
                                 </DialogDescription>
                             </DialogHeader>
-                            <div className="overflow-y-auto w-[750px] overflow-x-hidden p-4">
+                            <div className="overflow-y-auto w-[750px] overflow-x-hidden pb-4 px-4">
                                 {previewContent.length > 0 && (
                                     <div>
                                         {previewContent.map((pageData, index) => (
@@ -197,7 +213,7 @@ export const DocumentLoaderNodeComponent = ({
                         >
                         </div>
                     </div>
-                    <p className="text-end">Document</p>
+                    <p className="text-end">Document Chunks</p>
                 </div>
             </div>
         </div>

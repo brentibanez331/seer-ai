@@ -1,6 +1,7 @@
 // import { BaseNode } from "./BaseNodeOld"
 import { BaseNode } from "./BaseNode"
 import { ChatModelNode } from "./ChatModelNode"
+import { DocumentLoaderNode } from "./DocumentLoaderNode"
 import { SystemInstructionNode } from "./SystemInstructionNode"
 
 export interface NodeProps {
@@ -13,7 +14,7 @@ export interface NodeProps {
   onMouseEnterInput: (inputPositionX: number, inputPositionY: number, nodeId: string, inputKey: string) => void
   onMouseLeaveInput: (nodeId: string, inputKey: string) => void
   // onChangeModelType: (id: string, modelType: string) => void;
-  node: BaseNode | ChatModelNode | SystemInstructionNode
+  node: BaseNode | ChatModelNode | SystemInstructionNode | DocumentLoaderNode
 }
 
 export interface ChatModelNodeProps extends NodeProps{
@@ -27,4 +28,12 @@ export interface SystemInstructionNodeProps extends NodeProps{
 
 export interface DocumentLoaderNodeProps extends NodeProps{
   onParameterChange: (id: string, parameter: string, value: any) => void
+  onFileUploaded: (file: File | null) => void; 
+}
+
+
+export interface TextSplitterNodeProps extends NodeProps{
+  onParameterChange: (id: string, parameter: string, value: any) => void
+  // onFileUploaded: (file: File | null) => void; 
+  uploadedFile: File | null;
 }

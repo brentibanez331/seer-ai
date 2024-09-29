@@ -1,10 +1,11 @@
 import { BaseNode } from "./BaseNode"
 
-export interface DocumentLoaderNode extends BaseNode{
-  type: "documentLoader"
+export interface TextSplitterNode extends BaseNode{
+  type: "textSplitter"
   parameters: {
       name: string
-      fileFormat: string
+      chunk_size: number
+      chunk_overlap: number
       filePath: string | null
   }
   inputs: {

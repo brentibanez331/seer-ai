@@ -4,6 +4,7 @@ import { BaseNode } from "./interfaces/BaseNode";
 import { ChatModelNodeProps, NodeProps } from "./interfaces/NodeProps";
 import { OutputNodeComponent } from "./OutputNodeComponent";
 import { SystemInstructionNodeComponent } from "./SystemInstructionComponent";
+import { TextSplitterNodeComponent } from "./TextSplitterComponent";
 
 const NodeRenderer = (props: any) => {
     switch(props.node.type) {
@@ -15,6 +16,8 @@ const NodeRenderer = (props: any) => {
             return <SystemInstructionNodeComponent {...props}/>
         case 'documentLoader':
             return <DocumentLoaderNodeComponent {...props}/>
+        case 'textSplitter':
+            return <TextSplitterNodeComponent {...props}/>
     }
 }
 

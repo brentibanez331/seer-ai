@@ -103,8 +103,6 @@ const ChatModal: React.FC<ChatModalProps> = (props) => {
         setNewMessage(event.target.value);
     };
 
-
-
     return (
         <div className="buttonChat">
             <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
