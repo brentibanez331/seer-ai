@@ -68,10 +68,15 @@
   }
 }
 
+body{
+  background-color: #1b1b1b;
+  color: white
+}
+
 .boardWrapper {
   position: fixed;
-  width: 100vw;
-  height: 100vh;
+  width: 200vw;
+  height: 200vh;
   top: 0px;
   left: 0px;
   overflow: scroll;
@@ -79,12 +84,12 @@
 
 .board {
   position: relative;
-  width: 100vw;
-  height: 100vh;
+  width: 200vw;
+  height: 200vh;
   background-size: 20px 20px;
   background-image: radial-gradient(
     circle,
-    #b8b8b8bf 1px,
+    #414141bf 1px,
     rgba(0, 0, 0, 0) 1px
   );
   cursor: grab;
@@ -92,12 +97,12 @@
 
 .boardDragging {
   position: relative;
-  width: 100vw;
-  height: 100vh;
+  width: 200vw;
+  height: 200vh;
   background-size: 20px 20px;
   background-image: radial-gradient(
     circle,
-    #b8b8b8bf 1px,
+    #414141bf 1px,
     rgba(0, 0, 0, 0) 1px
   );
   cursor: grabbing;
@@ -105,7 +110,7 @@
 
 .button-wrapper {
   position: fixed;
-  top: 0;
+  top: 40px;
   right: 0;
   width: 100vw;
   padding: 24px 38px;
@@ -197,7 +202,7 @@
 }
 
 .buttonDeleteHidden {
-  transform: translateY(-100px);
+  transform: translateY(-150px);
   background-color: #dc2626;
   padding: 12px;
   border-radius: 100%;
@@ -259,8 +264,8 @@
   flex-direction: column;
   position: absolute;
   cursor: grab;
-  background-color: white;
-  border: 2px solid #c4c4c4;
+  background-color: rgb(28, 28, 28);
+  border: 2px solid #d1d1d1;
   border-radius: 6px;
   /* box-shadow: 1px 1px 11px -6px rgba(0, 0, 0, 0.75); */
   user-select: none;
@@ -271,7 +276,7 @@
 }
 
 .node:hover {
-  box-shadow: 2px 2px 12px -6px rgba(0, 0, 0, 0.75);
+  box-shadow: 2px 2px 12px -6px rgba(255, 255, 255, 0.75);
 }
 
 .node-selected {
@@ -279,8 +284,9 @@
   flex-direction: column;
   position: absolute;
   cursor: grab;
-  background-color: white;
-  border: 2px solid #e38c29;
+  background-color: rgb(28, 28, 28);
+  box-shadow: 2px 2px 12px -6px rgb(232, 123, 247, 0.75);
+  border: 2px solid rgb(232, 123, 247);
   border-radius: 6px;
   /* box-shadow: 1px 1px 11px -6px rgba(0, 0, 0, 0.75); */
   user-select: none;
@@ -291,7 +297,7 @@
 }
 
 .node-selected:hover {
-  box-shadow: 2px 2px 12px -6px rgba(0, 0, 0, 0.75);
+  box-shadow: 2px 2px 12px -6px #e87bf7bf;
 }
 
 .input-wrapper {
@@ -307,7 +313,7 @@
   width: 8px;
   height: 8px;
   border-radius: 100%;
-  background-color: #747474;
+  background-color: #dddddd;
   cursor: crosshair;
   pointer-events: all;
 }
@@ -330,7 +336,7 @@
   width: 8px;
   height: 8px;
   border-radius: 100%;
-  background-color: #747474;
+  background-color: #dddddd;
   cursor: crosshair;
   pointer-events: all;
 }
@@ -347,7 +353,7 @@
 
 .edge {
   pointer-events: all;
-  stroke: rgba(168, 168, 168, 0.8);
+  stroke: rgba(135, 135, 135, 0.8);
   stroke-width: 2;
   fill: transparent;
   cursor: pointer;
@@ -355,7 +361,7 @@
 
 .edge-selected {
   pointer-events: all;
-  stroke: rgb(216, 141, 62);
+  stroke: rgb(232, 123, 247);
   stroke-width: 3;
   fill: transparent;
 }
@@ -391,4 +397,13 @@
   cy: 0;
   r: 14;
   fill: rgb(175, 59, 59);
+}
+
+.no-scrollbar::-webkit-scrollbar{
+  display:none;
+}
+
+.no-scrollbar{
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
