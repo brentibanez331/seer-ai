@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Board } from "@/components/Board";
 import { ButtonComponent } from "@/components/Button";
-import { BoardNew } from "@/components/BoardNew";
 
 
 export default function Home() {
