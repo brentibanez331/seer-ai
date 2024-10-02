@@ -1,7 +1,7 @@
 export interface BaseNode {
     id: string
-    type: 'default' | 'chatModel' | 'output' | 'systemInstruction' | 'documentLoader' | 'textSplitter';
-    parameters: Record<string, any> | null
+    type: 'default' | 'chatModel' | 'output' | 'systemInstruction' | 'documentLoader' | 'textSplitter' | 'embedding' | 'retriever' | 'retrievalQA' | 'vectorStore';
+    // parameters: Record<string, any> | null
     prevPosition: {
         x: number;
         y: number

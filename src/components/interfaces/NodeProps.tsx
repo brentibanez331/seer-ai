@@ -31,9 +31,22 @@ export interface DocumentLoaderNodeProps extends NodeProps{
   onFileUploaded: (file: File | null) => void; 
 }
 
-
 export interface TextSplitterNodeProps extends NodeProps{
   onParameterChange: (id: string, parameter: string, value: any) => void
   // onFileUploaded: (file: File | null) => void; 
   uploadedFile: File | null;
 }
+
+export interface RetrieverNodeProps extends NodeProps{
+  onParameterChange: (id: string, parameter: string, value: any) => void
+}
+
+export interface EmbeddingNodeProps extends NodeProps{
+  onParameterChange: (id: string, parameter: string, value: any) => void
+}
+
+export interface VectorStoreNodeProps extends NodeProps{
+  onParameterChange: (id: string, parameter: string, value: any) => void
+}
+
+

@@ -2,15 +2,11 @@ import { BaseNode } from "./BaseNode"
 
 export interface DocumentLoaderNode extends BaseNode{
   type: "documentLoader"
-  parameters: {
-      name: string
-      fileFormat: string
-      filePath: string | null
-  }
-  inputs: {
-      prompt: string
-  }
-  outputs: {
-      response: string
-  }
+  parameters: DocumentLoaderParameters
+}
+
+export interface DocumentLoaderParameters {
+    name: string;
+    fileFormat: string;
+    filePath: string | null;
 }
