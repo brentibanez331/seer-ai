@@ -34,7 +34,7 @@ export const OutputNodeComponent = ({node, onMouseEnterInput, onMouseLeaveInput,
       }}
     >
         <div className="text-xs px-2 py-2 space-y-3">
-          <h2 className="text-md font-bold">OUTPUT</h2>
+          <h2 className="text-md font-bold">LLM Output</h2>
           {/* A Text + Node Input */}
           <div className="relative">
             <div className="input-wrapper">
@@ -47,7 +47,7 @@ export const OutputNodeComponent = ({node, onMouseEnterInput, onMouseLeaveInput,
               >
               </div>
             </div>
-            <p>Chat Model <span className="text-red-600">*</span></p>
+            <p className="text-neutral-400">Chat Model <span className="text-red-600">*</span></p>
           </div>
           <div className="relative">
             <div className="input-wrapper">
@@ -60,7 +60,20 @@ export const OutputNodeComponent = ({node, onMouseEnterInput, onMouseLeaveInput,
               >
               </div>
             </div>
-            <p>Document</p>
+            <p className="text-neutral-400">Document</p>
+          </div>
+          <div className="relative">
+            <div className="input-wrapper">
+              <div
+                // key={index}
+                ref={(el) => { }}
+                className="input"
+                onMouseEnter={(event) => handleMouseEnterInput(event.currentTarget, 'document')}
+                onMouseLeave={() => handleMouseLeaveInput('document')}
+              >
+              </div>
+            </div>
+            <p className="text-neutral-400">Output Parser</p>
           </div>
 
           {/* A Text + Node Output */}

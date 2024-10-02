@@ -162,7 +162,7 @@ export const TextSplitterNodeComponent = ({
                 <div className="py-2 space-y-4">
                     <Dialog open={isModalOpen} onOpenChange={() => setIsModalOpen(!isModalOpen)}>
                         <DialogTrigger asChild>
-                            <button className="w-full text-white bg-neutral-900 py-2 px-2 rounded-md flex items-center justify-center gap-2">
+                            <button className="w-full bg-white py-2 px-2 rounded-md flex items-center justify-center gap-2 text-black">
                                 <IoEyeSharp />
                                 Preview Data
                             </button>
@@ -174,13 +174,13 @@ export const TextSplitterNodeComponent = ({
                                     Edit or Add information
                                 </DialogDescription>
                             </DialogHeader>
-                            <div className="overflow-y-auto w-[750px] overflow-x-hidden pb-4 px-4">
+                            <div className="overflow-y-auto w-[750px] overflow-x-hidden pb-4 px-4 mb-4">
                                 {previewContent.length > 0 && (
                                     <div>
                                         {previewContent.map((pageData, index) => (
                                             <div key={index} className="border-b border-neutral-400 space-y-2 py-4">
                                                 <p className="text-sm">Page {pageData.page}</p>
-                                                <p>{pageData.page_content}</p>
+                                                <p className="text-sm text-neutral-400">{pageData.page_content}</p>
                                             </div>
                                         ))}
                                     </div>
@@ -190,10 +190,10 @@ export const TextSplitterNodeComponent = ({
                                 <Textarea className="h-full" placeholder="Type your instruction here..." onChange={handleInstructionChange} value={node.parameters.instruction} />
                             </div> */}
                             <div className="grid grid-cols-2 mx-4 gap-4">
-                                <Button className="mb-4" variant={"outline"} onClick={() => setIsModalOpen(false)}>
+                                <Button className="mb-4 bg-transparent text-white hover:bg-neutral-700 hover:text-white" variant={"outline"} onClick={() => setIsModalOpen(false)}>
                                     Discard Changes
                                 </Button>
-                                <Button className="mb-4" onClick={() => setIsModalOpen(false)}>
+                                <Button className="mb-4 text-black hover:bg-neutral-200" onClick={() => setIsModalOpen(false)}>
                                     Apply
                                 </Button>
                             </div>

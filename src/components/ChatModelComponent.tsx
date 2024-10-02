@@ -53,8 +53,14 @@ export const ChatModelNodeComponent = ({
                 onMouseDownNode(node.id, event)
             }}
         >
-            <div className="text-xs px-2 py-2">
-                <h2 className="text-md font-bold">CHAT MODEL</h2>
+            <div className="h-[50px] p-2 overflow-hidden relative bg-gradient-to-b from-[#e87bf760] to-transparent to-90%">
+                <img src={`chatmodels_logo/${node.parameters.chatModel}.png`} className="size-16"/>
+                <div className="absolute bottom-0 left-0 w-full h-full "></div>
+                {/* <div className="absolute bottom-[-10px] left-0 w-full h-full bg-gradient-to-t from-[#1c1c1c] from-30% to-transparent"></div> */}
+            </div>
+
+            <div className="text-xs px-2 py-2 space-y-4">
+                <h2 className="text-md font-bold uppercase">{node.parameters.chatModel} CHAT MODEL</h2>
                 {/* A Text + Node Input */}
                 <div className="relative">
                     <div className="input-wrapper">
@@ -67,22 +73,22 @@ export const ChatModelNodeComponent = ({
                         >
                         </div>
                     </div>
-                    <p>System Instruction</p>
+                    <p className="text-neutral-400">System Instruction</p>
                 </div>
 
                 <select
                     value={node.parameters.model}
                     onChange={handleModelTypeChange}
-                    className="border p-1 rounded my-4 w-full"
+                    className="border p-1 rounded bg-neutral-800 my-4 w-full"
                 >
-                    {node.models.map((type) => (
+                    {node.parameters.models.map((type) => (
                         <option key={type} value={type}>
                             {type}
                         </option>
                     ))}
                 </select>
 
-                <div className="pb-4 space-y-3">
+                <div className="pb-4 space-y-3 text-neutral-400">
                     <div className="flex justify-between">
                         <p>Temperature</p>
                         <p>{node.parameters.temperature}</p>
@@ -107,7 +113,7 @@ export const ChatModelNodeComponent = ({
                         >
                         </div>
                     </div>
-                    <p className="text-end">{node.parameters.chatModel} Base</p>
+                    <p className="text-end text-neutral-400">{node.parameters.chatModel} Base</p>
                 </div>
             </div>
         </div>

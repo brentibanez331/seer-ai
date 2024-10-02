@@ -70,7 +70,7 @@ export const SystemInstructionNodeComponent = ({
                     </TooltipProvider>
                 </div>
 
-                <div className="py-4 space-y-3">
+                <div className="py-4 space-y-3 text-neutral-400">
                     {node.parameters.instruction ? (
                         <p className="line-clamp-2">{node.parameters.instruction}</p>
                     ) : (
@@ -79,7 +79,7 @@ export const SystemInstructionNodeComponent = ({
 
                     <Dialog open={isModalOpen} onOpenChange={() => setIsModalOpen(!isModalOpen)}>
                         <DialogTrigger asChild>
-                            <button className="w-full text-white bg-neutral-900 py-2 px-2 rounded-md flex items-center justify-center gap-2">
+                            <button className="w-full text-black bg-white py-2 px-2 rounded-md flex items-center justify-center gap-2">
                                 <FaEdit />
                                 Edit Instructions
                             </button>
@@ -92,9 +92,9 @@ export const SystemInstructionNodeComponent = ({
                                 </DialogDescription>
                             </DialogHeader>
                             <div className="px-4 h-full pb-4">
-                                <Textarea className="h-full" placeholder="Type your instruction here..." onChange={handleInstructionChange} value={node.parameters.instruction} />
+                                <Textarea className="h-full resize-none" placeholder="Type your instruction here..." onChange={handleInstructionChange} value={node.parameters.instruction} />
                             </div>
-                            <Button className="mx-4 mb-4" onClick={() => setIsModalOpen(false)}>
+                            <Button className="mx-4 mb-4 text-black hover:bg-neutral-200" onClick={() => setIsModalOpen(false)}>
                                 Done
                             </Button>
                         </DialogContent>
@@ -110,7 +110,7 @@ export const SystemInstructionNodeComponent = ({
                         >
                         </div>
                     </div>
-                    <p className="text-end">Instruction</p>
+                    <p className="text-end text-neutral-400">Instruction</p>
                 </div>
             </div>
         </div>
