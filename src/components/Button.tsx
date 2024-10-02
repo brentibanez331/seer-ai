@@ -58,16 +58,16 @@ export const ButtonComponent = (props: ButtonProps) => {
 
             <button
                 className={props.showDelete ? "buttonDelete" : "buttonDeleteHidden"}
-            // onClick={props.onClickDelete}
+                onClick={props.onClickDelete}
             >
                 <CiTrash />
             </button>
-            <button
+            {/* <button
                 className={"buttonAdd"} onClick={handleOnClickAdd}>
                 <IoMdAdd />
-            </button>
+            </button> */}
 
-            <div className={isOpen ? "dropdown" : "dropdownHidden"}>
+            {/* <div className={isOpen ? "dropdown" : "dropdownHidden"}>
                 <label className="text-sm font-medium leading-6 text-[#27272a]">Number of Inputs</label>
                 <input className="input-field" type="number" value={numberInputs} onInput={handleChangeNumberInputs}></input>
                 <label className="text-sm font-medium leading-6 text-[#27272a]">Number of Outputs</label>
@@ -75,7 +75,7 @@ export const ButtonComponent = (props: ButtonProps) => {
                 <button className="transition ease-in p-3 rounded-md text-white bg-black cursor-pointer shadow-md outline-none" onClick={handleOnClickAddNode}>
                     Add Node
                 </button>
-            </div>
+            </div> */}
             <ChatModal
                 onClickChat={props.onClickChat}
                 modelId={props.modelId}
