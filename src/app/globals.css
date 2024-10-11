@@ -68,9 +68,9 @@
   }
 }
 
-body{
+body {
   background-color: #1b1b1b;
-  color: white
+  color: white;
 }
 
 .boardWrapper {
@@ -149,7 +149,7 @@ body{
 
 .buttonAdd:active {
   transform: scale(0.95);
-} 
+}
 
 .buttonChat {
   transition: all ease 0.2s;
@@ -199,6 +199,10 @@ body{
 
 .buttonDelete:active {
   transform: scale(0.95);
+}
+
+* {
+  user-select: none;
 }
 
 .buttonDeleteHidden {
@@ -399,11 +403,11 @@ body{
   fill: rgb(175, 59, 59);
 }
 
-.no-scrollbar::-webkit-scrollbar{
-  display:none;
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
-.no-scrollbar{
+.no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }

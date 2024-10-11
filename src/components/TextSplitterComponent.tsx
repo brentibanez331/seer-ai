@@ -121,7 +121,7 @@ export const TextSplitterNodeComponent = ({
     };
 
     return (
-        <div className={selected ? "node-selected w-[250px] h-auto" : "node w-[250px] h-auto"}
+        <div className={selected ? "node-selected w-[200px] h-auto" : "node w-[200px] h-auto"}
             style={{ transform: `translate(${x}px, ${y}px)` }}
             onMouseDown={(event: any) => {
                 event.stopPropagation()

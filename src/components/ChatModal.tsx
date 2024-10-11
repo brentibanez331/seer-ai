@@ -16,7 +16,7 @@ import { IoSend } from "react-icons/io5";
 import { FaEraser } from "react-icons/fa6";
 import React from 'react'
 import ReactDom from 'react-dom'
-import ReactMarkdown from 'react-markdown'
+import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 
 
@@ -33,6 +33,7 @@ const ChatModal: React.FC<ChatModalProps> = (props) => {
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     const messagesEndRef = useRef<HTMLDivElement>(null);
+    const [isTyping, setIsTyping] = useState(false);
 
 
 
@@ -81,6 +82,35 @@ const ChatModal: React.FC<ChatModalProps> = (props) => {
         }
     }
 
+    const typeMessage = (message: string) => {
+        let currentIndex = 0;
+        const typingInterval = setInterval(() => {
+            if (currentIndex <= message.length) {
+                setMessages((prevMessages) => {
+                    // If it's the first character, add the model message
+                    if (currentIndex === 1) {
+                        return [
+                            { role: 'model', message: message.substring(0, currentIndex) },
+                            ...prevMessages, // Add other messages
+                        ];
+                    } else if (currentIndex > 1) {
+                        // For subsequent characters, update the existing model message
+                        return prevMessages.map((m, i) =>
+                            i === 0 && m.role === 'model'
+                                ? { ...m, message: message.substring(0, currentIndex) }
+                                : m
+                        );
+                    } else {
+                        return prevMessages; // Don't update if currentIndex is 0
+                    }
+                });
+                currentIndex++;
+            } else {
+                clearInterval(typingInterval);
+            }
+        }, 2); // Adjust typing speed (milliseconds per character)
+    };
+
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages, isModalOpen]);
@@ -97,13 +127,10 @@ const ChatModal: React.FC<ChatModalProps> = (props) => {
 
         const modelMessage = await promptModel(temp)
 
-        if (modelMessage) {
-            
+        setIsTyping(false);
 
-            setMessages((prevMessages) => [
-                { role: "model", message: modelMessage },
-                ...prevMessages,
-            ]);
+        if (modelMessage) {
+            typeMessage(modelMessage)
         }
 
     };
@@ -132,7 +159,7 @@ const ChatModal: React.FC<ChatModalProps> = (props) => {
                                 </DialogDescription>
                             </div>
                             <Button className="text-white bg-red-400 hover:bg-red-300 space-x-2 transition ease-in" onClick={clearMessages}>
-                                <FaEraser/>
+                                <FaEraser />
                                 <p>CLEAR</p>
                             </Button>
                         </div>
@@ -144,11 +171,24 @@ const ChatModal: React.FC<ChatModalProps> = (props) => {
                         <div className="flex flex-col-reverse p-3">
                             <div ref={messagesEndRef} />
                             {messages.map((msg, index) => (
-                                <div key={index} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} mb-2`}>
-                                    <div className={`p-3 rounded-lg ${msg.role === 'user' ? 'ml-auto bg-blue-400 text-white' : 'mr-auto bg-neutral-700'} w-fit max-w-[75%]`}>
-                                        <p>{msg.message}</p>
-                                        {/* <ReactMarkdown remarkPlugins={[remarkGfm]} children={msg.message}></ReactMarkdown> */}
+                                <div
+                                    key={index}
+                                    className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} mb-2`}
+                                >
+                                    <div
+                                        className={`p-3 rounded-lg ${msg.role === 'user'
+                                            ? 'ml-auto bg-blue-400 text-white'
+                                            : 'mr-auto bg-neutral-700'} w-fit max-w-[75%]`}
+                                    >
+                                        <Markdown remarkPlugins={[remarkGfm]} children={msg.message}></Markdown>
                                     </div>
+                                    {msg.role === 'model' &&
+                                        index === 0 &&
+                                        isTyping && (
+                                            <span className="ml-2 typing-indicator">
+                                                ...
+                                            </span>
+                                        )}
                                 </div>
                             ))}
                         </div>

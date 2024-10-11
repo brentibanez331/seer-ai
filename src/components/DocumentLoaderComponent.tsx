@@ -25,7 +25,7 @@ import { DocumentLoaderNode } from "./interfaces/DocumentLoaderNode";
 import { IoEyeSharp } from "react-icons/io5";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-import { LuFileJson2 } from "react-icons/lu";
+
 
 interface PageContent {
     page: number;
@@ -107,7 +107,7 @@ export const DocumentLoaderNodeComponent = ({
     };
 
     return (
-        <div className={selected ? "node-selected w-[250px] h-auto" : "node w-[250px] h-auto"}
+        <div className={selected ? "node-selected w-[200px] h-auto" : "node w-[200px] h-auto"}
             style={{ transform: `translate(${x}px, ${y}px)` }}
             onMouseDown={(event: any) => {
                 event.stopPropagation()
