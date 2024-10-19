@@ -1998,7 +1998,7 @@ export const Board = () => {
       </div>
 
       <div id="boardWrapper" ref={boardWrapperRef} className="fixed top-0 left-0 w-screen h-screen overflow-scroll no-scrollbar">
-        {/* <button onClick={() => prepareModelData()} type="button" className="fixed bottom-5 right-10 p-3 bg-blue-500 z-[999]">DISPLAY</button> */}
+        <button onClick={() => prepareModelData()} type="button" className="fixed bottom-5 right-10 p-3 bg-blue-500 z-[999]">DISPLAY</button>
 
         {/* Adds a default NODE */}
         <div className="fixed items-center space-x-3 w-full flex justify-center py-4">

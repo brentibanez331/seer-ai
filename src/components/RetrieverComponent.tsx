@@ -59,6 +59,11 @@ export const RetrieverNodeComponent = ({
         onParameterChange(node.id, 'instruction', value);
     };
 
+    const handleMaxDocumentsChange = (value: number) => {
+        // Assuming onParameterChange is available to update the parent
+        onParameterChange(node.id, 'temperature', value);
+    };
+
     return (
         <div className={selected ? "node-selected w-[250px] h-auto" : "node w-[250px] h-auto"}
             style={{ transform: `translate(${x}px, ${y}px)` }}

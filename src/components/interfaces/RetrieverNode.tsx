@@ -7,5 +7,7 @@ export interface RetrieverNode extends BaseNode{
 
 export interface RetrieverParameters {
     name: string                    // The main embedding name
+    arxivMaxLoadDocs: number | null
+    arxivgetFullDocs: number | null
 }
 
