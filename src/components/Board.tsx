@@ -908,39 +908,39 @@ export const Board = () => {
     console.log(nodes)
   }
 
-  const handleOnClickRetriever = (retriever: string) => {
-    const randomX = window.innerWidth / 2 - 50
-    const randomY = window.innerHeight / 2 - 100
+  // const handleOnClickRetriever = (retriever: string) => {
+  //   const randomX = window.innerWidth / 2 - 50
+  //   const randomY = window.innerHeight / 2 - 100
 
-    const newNode: RetrieverNode = {
-      id: `node_${Math.random().toString(36).substring(2, 8)}`,
-      type: "retriever",
-      parameters: {
-        name: retriever,
+  //   const newNode: RetrieverNode = {
+  //     id: `node_${Math.random().toString(36).substring(2, 8)}`,
+  //     type: "retriever",
+  //     parameters: {
+  //       name: retriever,
 
-      },
-      inputs: {
-        prompt: ""
-      },
-      outputs: {
-        response: "Document"
-      },
+  //     },
+  //     inputs: {
+  //       prompt: ""
+  //     },
+  //     outputs: {
+  //       response: "Document"
+  //     },
 
-      prevPosition: {
-        x: randomX,
-        y: randomY
-      },
-      currPosition: {
-        x: randomX,
-        y: randomY
-      }
-    }
+  //     prevPosition: {
+  //       x: randomX,
+  //       y: randomY
+  //     },
+  //     currPosition: {
+  //       x: randomX,
+  //       y: randomY
+  //     }
+  //   }
 
-    // setNodes(prevNodes => [...prevNodes, newNode])
-    if (modelId) removeModel()
+  //   // setNodes(prevNodes => [...prevNodes, newNode])
+  //   if (modelId) removeModel()
 
-    console.log(nodes)
-  }
+  //   console.log(nodes)
+  // }
 
   const handleOnClickAdd = () => {
     // const randomX = window.innerWidth / 2
@@ -1477,21 +1477,21 @@ export const Board = () => {
         };
         break;
 
-      case 'retriever':
-        newNode = {
-          id: `node_${Math.random().toString(36).substring(2, 8)}`,
-          type: 'retriever',
-          currPosition: newNodePosition,
-          prevPosition: { x: 0, y: 0 },
-          parameters: {
-            name: data.name,
-          },
-          inputs: null,
-          outputs: {
-            document: "document"
-          },
-        };
-        break;
+      // case 'retriever':
+      //   newNode = {
+      //     id: `node_${Math.random().toString(36).substring(2, 8)}`,
+      //     type: 'retriever',
+      //     currPosition: newNodePosition,
+      //     prevPosition: { x: 0, y: 0 },
+      //     parameters: {
+      //       name: data.name,
+      //     },
+      //     inputs: null,
+      //     outputs: {
+      //       document: "document"
+      //     },
+      //   };
+      //   break;
 
       case 'textSplitter':
         newNode = {
@@ -1800,6 +1800,7 @@ export const Board = () => {
               ) : (<RxCaretDown></RxCaretDown>)}
             </span>
           </button>
+
           <AnimatePresence>
             {isRetrieversOpen && (
               <motion.div
@@ -2003,7 +2004,7 @@ export const Board = () => {
         {/* Adds a default NODE */}
         <div className="fixed items-center space-x-3 w-full flex justify-center py-4">
           <img src="colored_seer.png" className="size-10" />
-          <p className="text-3xl font-bold bg-gradient-to-b from-[#7f54dc] from-1% to-[#cb78ff] to-90% bg-clip-text text-transparent">SeerAI</p>
+          <p className="text-3xl font-bold bg-gradient-to-b from-[#7f54dc] from-1% to-[#cb78ff] to-90% bg-clip-text text-transparent">Yano</p>
         </div>
         <ButtonComponent
           showDelete={selectedNode !== null}
